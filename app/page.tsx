@@ -1,5 +1,5 @@
-import ChatHeader from "@/components/ui/ChatHeader";
-import { Input } from "@/components/ui/input";
+import ChatHeader from "@/components/ChatHeader";
+import ChatInput from "@/components/ChatInput";
 import InitUser from "@/lib/store/InitUser";
 import { createClient } from "@/utils/supabase/server";
 import React from "react";
@@ -41,9 +41,7 @@ export default async function Page() {
               })}
             </div>
           </div>
-          <div className="p-5">
-            <Input placeholder="send message" />
-          </div>
+          <ChatInput />
         </div>
       </div>
       <InitUser user={data.user || undefined} />
