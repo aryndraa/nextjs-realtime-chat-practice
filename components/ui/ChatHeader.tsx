@@ -10,30 +10,11 @@ export default function ChatHeader({ user }: { user: User | undefined }) {
   const supabase = supabaseBrowser();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const { data: { user } } = await supabase.auth.getUser();
-  //     setUser(user);
-  //   };
-
-  //   getUser();
-
-  //   // Optional: subscribe ke perubahan auth (login/logout)
-  //   const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-  //     setUser(session?.user ?? null);
-  //   });
-
-  //   return () => {
-  //     listener.subscription.unsubscribe();
-  //   };
-  // }, []);
-
   async function handleLoginWithGithub() {
     await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
         redirectTo: `${location.origin}/auth/callback`, // sesuaikan jika kamu pakai route ini
-        scopes: "read:user user:email",
       },
     });
   }
