@@ -34,6 +34,9 @@ export default function Message({ message }: { message: Imessage }) {
             <h2 className="text-sm text-gray-400">
               {new Date(message.created_at).toDateString()}
             </h2>
+            {message.is_edit && (
+              <h3 className="text-sm text-gray-400">edited</h3>
+            )}
           </div>
           {message.users?.id === user?.id && <MessageMenu message={message} />}
         </div>

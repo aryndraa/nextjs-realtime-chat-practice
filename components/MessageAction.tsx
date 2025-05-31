@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-import { useMessage } from "@/lib/store/messages";
+import { Imessage, useMessage } from "@/lib/store/messages";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import { toast } from "sonner";
 
@@ -78,6 +78,9 @@ export default function DeleteAlert() {
 
 export function EditAlert() {
   const actionMessage = useMessage((state) => state.actionMessage);
+  const optimisticUpdateMessage = useMessage(
+    (state) => state.optimisticUpdateMessage
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleEdit = async () => {
@@ -85,6 +88,12 @@ export function EditAlert() {
     const text = inputRef.current?.value.trim();
 
     if (text) {
+      optimisticUpdateMessage({
+        ...actionMessage,
+        text,
+        is_edit: true,
+      } as Imessage);
+
       const { error } = await supabase
         .from("messages")
         .update({ text, is_edit: true })
@@ -97,6 +106,9 @@ export function EditAlert() {
       }
 
       document.getElementById("trigger-edit")?.click();
+    } else {
+      document.getElementById("trigger-edit")?.click();
+      document.getElementById("trigger-delete")?.click();
     }
   };
 
@@ -104,8 +116,9 @@ export function EditAlert() {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <button id="trigger-edit">Edit Message</button>
+          <button id="trigger-edit"></button>
         </DialogTrigger>
+
         <DialogContent className="w-full">
           <DialogHeader>
             <DialogTitle>Edit message</DialogTitle>
