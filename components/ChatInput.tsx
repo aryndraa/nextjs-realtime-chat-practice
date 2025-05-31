@@ -12,7 +12,7 @@ export default function ChatInput() {
   const user = useUser((state) => state.user);
   const supabase = supabaseBrowser();
 
-  const addMessage = useMessage((state) => state.addMessage);
+  const addMessage = useMessage((state) => state.optimisticAddMessage);
 
   const handleSendMessage = async (text: string) => {
     if (text.trim()) {
