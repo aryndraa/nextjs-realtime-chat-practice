@@ -10,8 +10,9 @@ import { Imessage, useMessage } from "@/lib/store/messages";
 
 export default function ChatInput() {
   const user = useUser((state) => state.user);
-  const addMessage = useMessage((state) => state.addMessage);
   const supabase = supabaseBrowser();
+
+  const addMessage = useMessage((state) => state.addMessage);
 
   const handleSendMessage = async (text: string) => {
     if (text.trim()) {
@@ -43,6 +44,7 @@ export default function ChatInput() {
   return (
     <div className="p-5">
       <Input
+        type="text"
         placeholder="send message"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
