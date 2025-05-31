@@ -54,7 +54,14 @@ const MessageMenu = ({ message }: { message: Imessage }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Action</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            document.getElementById("trigger-edit")?.click();
+            setActionMessage(message);
+          }}
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
             document.getElementById("trigger-delete")?.click();
