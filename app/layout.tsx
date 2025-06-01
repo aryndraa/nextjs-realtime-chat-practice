@@ -19,7 +19,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${space_Grotesk.variable} antialiased`}>
+      <body
+        className={`${space_Grotesk.variable} antialiased overflow-x-hidden`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
