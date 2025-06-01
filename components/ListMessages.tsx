@@ -7,9 +7,10 @@ import DeleteAlert, { EditAlert } from "./MessageAction";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import { toast } from "sonner";
 import { ArrowDown } from "lucide-react";
+import LoadMoreMessages from "./LoadMoreMessages";
 
 export default function ListMessages() {
-  const scrollRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [userScrolled, setUserScrolled] = useState(false);
   const [notification, setNotification] = useState(0);
 
@@ -49,7 +50,7 @@ export default function ListMessages() {
             }
           }
 
-          const scrollContainer = scrollRef.current;
+          const scrollContainer = scrollRef.current!;
           if (
             scrollContainer.scrollTop <
             scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
@@ -103,7 +104,10 @@ export default function ListMessages() {
   };
   const scrollDown = () => {
     setNotification(0);
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -113,7 +117,9 @@ export default function ListMessages() {
         ref={scrollRef}
         onScroll={handleOnScroll}
       >
-        <div className="flex-1 "></div>
+        <div className="flex-1 pb-5 ">
+          <LoadMoreMessages />
+        </div>
         <div className="space-y-7">
           {messages.map((value, index) => {
             return <Message key={index} message={value} />;
