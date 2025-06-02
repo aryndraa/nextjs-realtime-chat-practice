@@ -8,20 +8,29 @@ export default function ChatPresence() {
   const supabase = supabaseBrowser();
   const [onlineUsers, setOnlineUsers] = useState<number>(0);
 
+  type PresencePayload = {
+    user_id: string;
+    online_at: string;
+  };
+
   useEffect(() => {
     if (!user) return;
 
     const channel = supabase.channel("room1", {
       config: {
         presence: {
-          key: user.id, // identifikasi presence unik per user
+          key: user.id,
         },
       },
     });
 
     channel
       .on("presence", { event: "sync" }, () => {
-        const state = channel.presenceState();
+        const state = channel.presenceState() as Record<
+          string,
+          PresencePayload[]
+        >;
+
         const userIds: string[] = [];
 
         for (const id in state) {
@@ -48,7 +57,7 @@ export default function ChatPresence() {
       });
 
     return () => {
-      channel.unsubscribe(); // cleanup saat komponen di-unmount
+      channel.unsubscribe();
     };
   }, [user, supabase]);
 
