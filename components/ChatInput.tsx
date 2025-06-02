@@ -34,7 +34,12 @@ export default function ChatInput() {
       addMessage(newMessage as Imessage);
       setOptimisticIds(newMessage.id);
 
-      const { error } = await supabase.from("messages").insert({ text });
+      const { error } = await supabase.from("messages").insert({
+        id: newMessage.id,
+        text: newMessage.text,
+        send_by: newMessage.send_by,
+      });
+
       if (error) {
         toast.error(error.message);
       }
