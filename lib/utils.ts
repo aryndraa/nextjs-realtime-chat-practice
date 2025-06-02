@@ -7,6 +7,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getFromAndTo(page: number, itemPerPage: number) {
   let from = page * itemPerPage;
+
+  // eslint-disable-next-line prefer-const
   let to = from + itemPerPage;
 
   if (page > 0) {
