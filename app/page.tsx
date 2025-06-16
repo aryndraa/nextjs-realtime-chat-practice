@@ -15,7 +15,7 @@ export default async function Page() {
 
   return (
     <>
-      <div className="max-w-3xl mx-auto md:py-10 h-screen">
+      <div className="max-w-3xl mx-auto md:py-10 h-[100dvh]">
         <div className="h-full border rounded-md flex flex-col">
           <ChatHeader user={data.user || undefined} />
           {data.user ? (
