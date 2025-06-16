@@ -5,19 +5,10 @@ import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import ChatPresence from "./ChatPresence";
 import { supabaseBrowser } from "@/utils/supabase/browser";
+import AuthDialog from "./AuthDialog";
 
 export default function ChatHeader({ user }: { user: User | undefined }) {
   const router = useRouter();
-
-  const handleLoginWithGithub = () => {
-    const supabase = supabaseBrowser();
-    supabase.auth.signInWithOAuth({
-      provider: "github",
-      options: {
-        redirectTo: location.origin + "/auth/callback",
-      },
-    });
-  };
 
   const handleLogout = async () => {
     const supabase = supabaseBrowser();
@@ -32,11 +23,7 @@ export default function ChatHeader({ user }: { user: User | undefined }) {
           <h1 className="text-xl font-bold">Daily Chat</h1>
           <ChatPresence />
         </div>
-        {user ? (
-          <Button onClick={handleLogout}>Logout</Button>
-        ) : (
-          <Button onClick={handleLoginWithGithub}>Login</Button>
-        )}
+        {user ? <Button onClick={handleLogout}>Logout</Button> : <AuthDialog />}
       </div>
     </div>
   );
